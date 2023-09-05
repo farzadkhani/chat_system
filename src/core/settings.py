@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # custom apps
     "main_app",
     "communications",
+    "notification_system",
     # third party apps
     "rest_framework",
     "django_filters",
@@ -184,6 +185,3 @@ CHANNEL_LAYERS = {
         },
     },
 }
-# CHANNEL_LAYERS = {
-#     "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
-# }
