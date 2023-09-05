@@ -5,7 +5,7 @@ from django.db import models
 
 class SoftDeleteMixinQuerySet(models.QuerySet):
     def delete(self):
-        return self.update(is_removed=True, is_active=False)
+        return self.update(is_soft_deleted=False)
 
     def purge(self):
         return super().delete()
@@ -14,19 +14,19 @@ class SoftDeleteMixinQuerySet(models.QuerySet):
 class SoftDeleteMixinManager(models.Manager):
     def get_queryset(self):
         return SoftDeleteMixinQuerySet(self.model, using=self._db).exclude(
-            is_removed=True
+            is_soft_deleted=True
         )
 
     def deleted(self):
         return SoftDeleteMixinQuerySet(self.model, using=self._db).filter(
-            is_removed=True
+            is_soft_deleted=True
         )
 
     def active(self):
-        return self.get_queryset().filter(is_active=True)
+        return self.get_queryset().filter(is_soft_deleted=False)
 
     def deactive(self):
-        return self.get_queryset().filter(is_active=False)
+        return self.get_queryset().filter(is_soft_deleted=True)
 
     def everything(self):
         return SoftDeleteMixinQuerySet(self.model, using=self._db)
@@ -44,13 +44,11 @@ class SoftDeleteMixin(models.Model):
     class Meta:
         abstract = True
 
-    is_removed = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_soft_deleted = models.BooleanField(default=False)
     objects = SoftDeleteMixinManager()
 
     def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.is_removed = True
+        self.is_soft_deleted = True
 
         self.save()
 
