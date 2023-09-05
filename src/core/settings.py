@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # custom apps
     "main_app",
+    "communications",
     # third party apps
     "rest_framework",
     "django_filters",
