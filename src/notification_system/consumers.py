@@ -1,6 +1,6 @@
 import json
 
-from asgiref.sync import sync_to_async
+from asgiref.sync import sync_to_async, async_to_sync
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 
@@ -35,7 +35,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         access_data = AccessToken(token)
         return access_data.get("user_id", None)
 
-    async def connect(self):
+    def connect(self):
         # check token
         token = self.extract_token(self.scope)
         user_id = self.get_user_id_from_token(token)
@@ -47,13 +47,17 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         self.room_group_name = "chat_%s" % self.room_name
 
         # join room group
-        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name, self.channel_name
+        )
 
-        await self.accept()
+        self.accept()
 
-    async def disconnect(self, close_code):
+    def disconnect(self, close_code):
         # Leave room group
-        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name, self.channel_name
+        )
 
     def send_notification(self, event):
         # Send message to WebSocket chanel groups

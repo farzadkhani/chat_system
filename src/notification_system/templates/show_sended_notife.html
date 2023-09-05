@@ -27,7 +27,7 @@
     <script type="text/javascript">
         var token = prompt("Enter token:", "")
         function handle_chat() {
-            let url = `ws://${window.location.host}/ws/socket-server/`
+            let url = `ws://${window.location.host}/notification/ws/socket-server/`
 
             const chatSocket = new WebSocket(url)
 
@@ -59,7 +59,7 @@
 
         function handle_notification() {
             let form = document.getElementById('form2')
-            let url = `ws://${window.location.host}/ws/notification/?token=${token}`
+            let url = `ws://${window.location.host}/notification/ws/notification/?token=${token}`
 
             const notificationSocket = new WebSocket(url)
 

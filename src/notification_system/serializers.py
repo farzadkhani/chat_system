@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Notification
 from main_app.serializers import ReadOnlyModelSerializer
-from communications.serializers import MessageModelSerializer
+from communications.serializers import GetMessageModelSerializer
 
 
 class NotificationReadOnlyModelSerializer(ReadOnlyModelSerializer):
@@ -12,7 +12,7 @@ class NotificationReadOnlyModelSerializer(ReadOnlyModelSerializer):
     """
 
     # TODO: create read only serializer for User model
-    message = MessageModelSerializer(read_only=True)
+    message = GetMessageModelSerializer(read_only=True)
 
     class Meta:
         model = Notification
