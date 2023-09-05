@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from datetime import timedelta
 
 try:
     from .local_settings import *  # noqa
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # third party apps
     "rest_framework",
     "django_filters",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -125,14 +126,13 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.OrderingFilter",
     ],
-    "DEFAULT_PAGINATION_CLASS": (
-        "rest_framework.pagination.LimitOffsetPagination"
-    ),
+    "DEFAULT_PAGINATION_CLASS": ("rest_framework.pagination.LimitOffsetPagination"),
     "PAGE_SIZE": 10,
 }
 
@@ -168,6 +168,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #     # })
 #     return verbose_lookups
 
+# # JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
 # # ASGI
 ASGI_APPLICATION = "core.asgi.application"
 CHANNEL_LAYERS = {
@@ -181,4 +187,3 @@ CHANNEL_LAYERS = {
 # CHANNEL_LAYERS = {
 #     "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
 # }
-
