@@ -9,6 +9,12 @@ User = get_user_model()
 
 
 class Message(ModelMixin):
+    """
+    model for messages between users base on ModelMixin class for soft delete
+    with quote_to field for quote to another message
+    short_text property for short text of message in admin panel
+    """
+
     class Meta:
         verbose_name = "Message model"
         verbose_name_plural = "Messages model"
@@ -35,7 +41,7 @@ class Message(ModelMixin):
 
     def __str__(self):
         return f"{self.sender} -> {self.receiver}"
-    
+
     @property
     def short_text(self):
         return self.text[:20]
