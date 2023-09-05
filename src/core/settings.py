@@ -158,13 +158,13 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # # django_filters
-def FILTERS_VERBOSE_LOOKUPS():
-    from django_filters.conf import DEFAULTS
-    verbose_lookups = DEFAULTS["VERBOSE_LOOKUPS"].copy()
-    # verbose_lookups.update({
-    #     'exact': 'is equal to',
-    # })
-    return verbose_lookups
+# def FILTERS_VERBOSE_LOOKUPS():
+#     from django_filters.conf import DEFAULTS
+#     verbose_lookups = DEFAULTS["VERBOSE_LOOKUPS"].copy()
+#     # verbose_lookups.update({
+#     #     'exact': 'is equal to',
+#     # })
+#     return verbose_lookups
 
 # # ASGI
 ASGI_APPLICATION = "core.asgi.application"
