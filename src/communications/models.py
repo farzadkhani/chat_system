@@ -35,3 +35,7 @@ class Message(ModelMixin):
 
     def __str__(self):
         return f"{self.sender} -> {self.receiver}"
+    
+    @property
+    def short_text(self):
+        return self.text[:20]
