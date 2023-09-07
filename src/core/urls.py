@@ -35,4 +35,5 @@ urlpatterns = [
     # app urls
     path("main_app/", include("main_app.urls")),
     path("communications/", include("communications.urls")),
+    path("notification/", include("notification_system.urls")),
 ]

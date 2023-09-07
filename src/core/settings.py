@@ -29,7 +29,9 @@ BASE_DIR moved to src/core/local_settings.py
 """ Debug moved to src/core/local_settings.py"""
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-uds$%r*o+o(@$8rtiee!#z2-m=56brkrl^s@l1cc)st_r9g$*0"
+SECRET_KEY = (
+    "django-insecure-uds$%r*o+o(@$8rtiee!#z2-m=56brkrl^s@l1cc)st_r9g$*0"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 """ Allowed hosts moved to src/core/local_settings.py"""
@@ -50,15 +52,18 @@ INSTALLED_APPS = [
     # custom apps
     "main_app",
     "communications",
+    "notification_system",
     # third party apps
     "rest_framework",
     "django_filters",
     "rest_framework_simplejwt",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # corsheaders
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -106,13 +111,19 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.MinimumLengthValidator"
+        ),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.CommonPasswordValidator"
+        ),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.NumericPasswordValidator"
+        ),
     },
 ]
 
@@ -132,7 +143,9 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.OrderingFilter",
     ],
-    "DEFAULT_PAGINATION_CLASS": ("rest_framework.pagination.LimitOffsetPagination"),
+    "DEFAULT_PAGINATION_CLASS": (
+        "rest_framework.pagination.LimitOffsetPagination"
+    ),
     "PAGE_SIZE": 10,
 }
 
@@ -170,7 +183,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # # JWT
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
 
@@ -184,6 +197,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-# CHANNEL_LAYERS = {
-#     "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
-# }
+
+# # coresheaders
+CORS_ALLOW_ALL_ORIGINS = True
