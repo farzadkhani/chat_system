@@ -7,6 +7,10 @@
     <title>Notify Me</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -27,7 +31,7 @@
     <script type="text/javascript">
         var token = prompt("Enter token:", "")
         function handle_chat() {
-            let url = `ws://${window.location.host}/notification/ws/socket-server/`
+            let url = `ws://${window.location.host}/ws/socket-server/`
 
             const chatSocket = new WebSocket(url)
 
@@ -59,7 +63,7 @@
 
         function handle_notification() {
             let form = document.getElementById('form2')
-            let url = `ws://${window.location.host}/notification/ws/notification/?token=${token}`
+            let url = `ws://${window.location.host}/ws/notification/?token=${token}`
 
             const notificationSocket = new WebSocket(url)
 
